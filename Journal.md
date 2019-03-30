@@ -19,7 +19,9 @@ Opposed to building finnegans_wake_demo in dev, then just use nucypher lib.
 * Code uses the py nucypher lib
 * Code deployed as OpenFaaS funcs
 * Ng cli uses them
-* OpenFaaS quick start: [OpenFaaS on Windows Devbox](https://rasor.github.io/openfaas-on-windows-devbox.html)
+* Install OpenFaaS: [OpenFaaS on Windows Devbox](https://rasor.github.io/openfaas-on-windows-devbox.html)
+
+#### Create a test function - nucypher-test1
 
 ```bash
 # Verify Faas CLI is responding
@@ -40,10 +42,51 @@ cd nuc-openfaas
 faas-cli new nucypher-test1 --lang python3
 # Function created in folder: nucypher-test1
 # Stack file written: nucypher-test1.yml
-
-# Cleanup - Delete all folders under \template\ except for python3
-
 ```
+
+* Cleanup
+    *Delete all folders under \template\ except for python3
+* Edit nucypher-test1.yml to
+    * image: rasor/nucypher-test1:v1
+
+```bash
+# Let's build!
+faas-cli build -f ./nucypher-test1.yml
+# Successfully built 9286e60f54c0
+# Successfully tagged rasor/nucypher-test1:v1
+# Image: rasor/nucypher-test1:v1 built.
+
+# Verify img has been built
+docker images
+# REPOSITORY                     TAG                 IMAGE ID            CREATED             SIZE
+# rasor/nucypher-test1           v1                  9286e60f54c0        3 minutes ago       95.6MB
+
+# Push the img to docker hub for fast access
+faas-cli push -f nucypher-test1.yml
+```
+
+* Verify the img has been uploaded: [Docker Hub](https://hub.docker.com/r/rasor/nucypher-test1)
+
+```bash
+# Time to Deploy
+faas-cli deploy -f ./nucypher-test1.yml
+# Deployed. 202 Accepted.
+# URL: http://127.0.0.1:8080/function/nucypher-test1
+
+# Let's try to invoke it
+echo "one step forward" | faas-cli invoke nucypher-test1
+# Hello from NuCypher-Test1! You said: "one step forward"
+```
+
+
+
+
+
+
+
+
+
+
 
 -------------------------------
 

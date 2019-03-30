@@ -5,4 +5,4 @@ functions:
   nucypher-test1:
     lang: python3
     handler: ./nucypher-test1
-    image: nucypher-test1:latest
+    image: rasor/nucypher-test1:v1

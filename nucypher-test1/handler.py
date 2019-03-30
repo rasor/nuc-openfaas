@@ -3,5 +3,5 @@ def handle(req):
     Args:
         req (str): request body
     """
-
-    return req
+    print("Hello from NuCypher-Test1! You said: " + req)
+    #return req
